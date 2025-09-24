@@ -521,7 +521,7 @@ class XVLMRetrieval_hccm(BaseModel):
             )
             loss.update(entis_itc_loss)
         
-        # =============== compute the bboxes and spatial loss ===============
+        # =============== compute the bboxes ===============
         total_bb_loss = []
         for bs_id, bbox_info_list in pair.items():
             for bbox_info in bbox_info_list:
