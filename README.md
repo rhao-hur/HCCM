@@ -1,57 +1,62 @@
+Of course, here is the English translation of your `README.md` file. All content and the original structure have been preserved.
+
+---
+
 # HCCM: Hierarchical Cross-Granularity Contrastive and Matching Learning for Natural Language-Guided Drones
 
 [![Paper](https://img.shields.io/badge/arXiv-2508.21539-b31b1b.svg)](https://arxiv.org/pdf/2508.21539)
 [![Pretrained Model](https://img.shields.io/badge/Model-Download-blue.svg)](https://drive.google.com/file/d/1p468glkjTqxuE7YhzdXnC1Kx4xEJQEM3/view?usp=sharing)
 [![License](https://img.shields.io/badge/License-Apache--2.0-green.svg)](LICENSE)
 
-**这是我们发表于 ACM MM 2025 的论文 "HCCM" 的官方代码实现。**
+**This is the official implementation for our ACM MM 2025 paper, "HCCM".**
 
-## 动态与更新 (News & Updates)
+## News & Updates
 
-*   **[2025.09.24]** 我们正式开源了 HCCM 的完整代码以及在 GeoText1652 数据集上训练的模型权重。
-*   **[2025.09.23]** 我们的方法在 [RoboSense 2025 挑战赛 - 赛道 4](https://robosense2025.github.io/track4) 中成功入围决赛前五，进入最终的代码审查阶段。该挑战赛是机器人领域顶级会议 **IROS 2025** 的官方研讨会之一。
-*   **[2025.07.06]** 我们的论文 "HCCM: Hierarchical Cross-Granularity Contrastive and Matching Learning for Natural Language-Guided Drones" 已被 **ACM Multimedia (MM) 2025** 会议正式接收。
+*   **[2025.09.24]** We have officially released the complete code for HCCM and the model weights trained on the GeoText1652 dataset.
+*   **[2025.09.23]** Our method has been selected as one of the top five finalists in the [RoboSense 2025 Challenge - Track 4](https://robosense2025.github.io/track4), advancing to the final code review stage. This challenge is an official workshop of the top-tier robotics conference, **IROS 2025**.
+*   **[2025.07.06]** Our paper, "HCCM: Hierarchical Cross-Granularity Contrastive and Matching Learning for Natural Language-Guided Drones," has been officially accepted by **ACM Multimedia (MM) 2025**.
 
-## 快速开始
+## Quick Start
 
-首先，克隆本仓库到您的本地设备：
+First, clone this repository to your local machine:
 ```bash
 git clone https://github.com/rhao-hur/HCCM.git
 cd HCCM
 ```
 
-## 环境配置
+## Environment Setup
 
 ```bash
 conda create -n hccm python=3.9.20 -y
 conda activate hccm
 ```
 
-接下来，请严格遵循以下步骤安装所有必需的依赖库：
+Next, please strictly follow the steps below to install all the required dependencies:
 
 ```bash
-# 步骤 1: 安装 PyTorch (针对 CUDA 11.8 版本)
+# Step 1: Install PyTorch (for CUDA 11.8)
 pip install torch==2.1.1 torchvision==0.16.1 torchaudio==2.1.1 --index-url https://download.pytorch.org/whl/cu118
 
-# 步骤 2: 安装基础依赖库
+# Step 2: Install basic dependencies
 pip install ftfy==6.3.0 regex==2024.9.11 fsspec==2024.10.0 "protobuf>=3.2.0"
 pip install opencv-python==4.10.0.84
 
-# 步骤 3: 安装 OpenMMLab 相关库
+# Step 3: Install OpenMMLab libraries
 pip install -U openmim==0.3.9 
 mim install mmengine==0.10.5
 pip install "numpy==1.26.4" scipy
 mim install "mmcv==2.1.0"
 
-# 步骤 4: 安装 Transformers 和 MMPretrain
+# Step 4: Install Transformers and MMPretrain
 pip install transformers==4.12.5 tokenizers==0.10.3
 mim install "mmpretrain==1.2.0"
 
-# 步骤 5: 安装其他必要库
+# Step 5: Install other necessary libraries
 pip install pycocotools==2.0.8
 pip install timm==0.6.13
 ```
-请确保您的项目根目录最后符合以下结构：
+Please ensure your project's root directory is structured as follows:
+
 ```
 .
 ├── datasets/
@@ -73,26 +78,26 @@ pip install timm==0.6.13
     └── README.md
 ```
 
-## 数据集与模型准备
+## Dataset and Model Preparation
 
-### 1. 数据集准备
+### 1. Dataset Preparation
 
-首先，在项目根目录下创建 `datasets` 文件夹。
+First, create a `datasets` folder in the project root directory.
 
 ```bash
 mkdir datasets
 cd datasets
 ```
 
-#### GeoText1652 数据集
+#### GeoText1652 Dataset
 
-我们推荐使用 `huggingface-cli` 从其官方仓库下载 GeoText1652 数据集。
+We recommend using `huggingface-cli` to download the GeoText1652 dataset from its official repository.
 
 ```bash
 huggingface-cli download --repo-type dataset --resume-download truemanv5666/GeoText1652_Dataset --local-dir GeoText1652_Dataset
 ```
 
-下载完成后，进入 `images` 目录，解压所有的图像压缩包并删除原文件。
+After the download is complete, navigate to the `images` directory, extract all the compressed image archives, and then remove the original files.
 
 ```bash
 cd GeoText1652_Dataset/images
@@ -100,16 +105,16 @@ find . -type f -name "*.tar.gz" -print0 | xargs -0 -I {} bash -c 'tar -xzf "{}" 
 cd ../..
 ```
 
-#### ERA 数据集
+#### ERA Dataset
 
-首先，为 ERA 数据集创建相应目录。
+First, create the corresponding directory for the ERA dataset.
 
 ```bash
 mkdir ERA_Dataset
 cd ERA_Dataset
 ```
 
-ERA 数据集的图像文件 (`era_images.zip`) 可以从 [VCSR GitHub 仓库](https://github.com/huangjh98/VCSR) 获得。请下载该文件，放置于 `datasets/ERA_Dataset/` 目录下，然后解压。
+The image files for the ERA dataset (`era_images.zip`) can be obtained from the [VCSR GitHub repository](https://github.com/huangjh98/VCSR). Please download this file, place it in the `datasets/ERA_Dataset/` directory, and then unzip it.
 
 ```bash
 unzip era_images.zip
@@ -117,27 +122,29 @@ mv era_images images
 rm era_images.zip
 ```
 
-接下来，我们需要生成与 GeoText1652 格式兼容的 `test.json` 标注文件。为此，我们先克隆 VCSR 仓库以获取原始数据，然后运行处理脚本。
+Next, we need to generate a `test.json` annotation file that is compatible with the GeoText1652 format. To do this, we first clone the VCSR repository to get the original data, and then run our processing script.
 
 ```bash
-# 克隆 VCSR 仓库以获取原始标注
+# Clone the VCSR repository to get the original annotations
 git clone https://github.com/huangjh98/VCSR.git
-# 运行我们的处理脚本，生成 test.json
+
+# Run our processing script to generate test.json
 python ../../HCCM/process_ERA_dataset.py VCSR/data/era_precomp test.json
-# 操作完成后返回项目根目录
+
+# Return to the project root directory when done
 cd ../../HCCM
 ```
 
-### 2. 模型准备
+### 2. Model Preparation
 
-#### XVLM 预训练模型
+#### XVLM Pre-trained Model
 
-请从以下链接下载 [X-VLM](https://github.com/zengyan-97/X-VLM) 的预训练模型，并将其保存到 `HCCM/pretrain` 目录中。
+Please download the pre-trained models for [X-VLM](https://github.com/zengyan-97/X-VLM) from the following links and save them to the `HCCM/pretrain` directory.
 
 *   [X-VLM (4M, 200K steps)](https://drive.google.com/file/d/1B3gzyzuDN1DU0lvt2kDz2nTTwSKWqzV5/view?usp=sharing)
 *   [X-VLM (16M, 200K steps)](https://drive.google.com/file/d/1iXgITaSbQ1oGPPvGaV0Hlae4QiJG5gx0/view?usp=sharing)
 
-下载完成后，执行提供的脚本，将原始的 XVLM 模型权重转换为 MMCV 兼容的格式。
+Once downloaded, execute the provided script to convert the original XVLM model weights into an MMCV-compatible format.
 
 ```bash
 python process_xvlm2mmcv.py \
@@ -145,81 +152,81 @@ python process_xvlm2mmcv.py \
 --output_path "pretrain/16m_base_model_state_step_199999_(xvlm2mmcv).pth"
 ```
 
-#### BERT 模型
+#### BERT Model
 
-使用 `huggingface-cli` 工具将 `bert-base-uncased` 模型下载到 `HCCM/pretrain` 目录。
+Use the `huggingface-cli` tool to download the `bert-base-uncased` model to the `HCCM/pretrain` directory.
 
 ```bash
 huggingface-cli download --resume-download google-bert/bert-base-uncased --local-dir pretrain/bert-base-uncased
 ```
 
-## 在 GeoText1652 数据集上训练 HCCM
+## Training HCCM on the GeoText1652 Dataset
 
-默认情况下，训练脚本会自动从 `../datasets` 路径加载数据。如果您将数据集存放在了其他位置，请务必修改以下配置文件中的 `data_root` 参数：
+By default, the training script automatically loads data from the `../datasets` path. If you have stored the datasets in a different location, please be sure to modify the `data_root` parameter in the following configuration files:
 
 *   `HCCM/configs/_base_/datasets/geotext1652_retrieval.py`
 *   `HCCM/configs/_base_/datasets/ERA_retrieval.py`
 
-我们所有的实验均在单张 80G A800 GPU 上完成。默认配置下，每个 epoch 会进行一次验证。请注意，我们尚未对多卡训练的代码进行充分验证。
+All of our experiments were conducted on a single 80G A800 GPU. By default, validation is performed once per epoch. Please note that we have not fully validated the code for multi-GPU training.
 
-**单卡训练:**
+**Single-GPU Training:**
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 python tools/train.py configs/exp/xvlm_1xb24_hccm_geotext1652.py
 ```
 
-**多卡训练与验证的特别说明:**
+**Special Instructions for Multi-GPU Training and Validation:**
 
-由于完整的测试集数据量较大，验证过程对 GPU 显存有较高要求。为了能够在资源受限（如 24G 显存）的设备上运行验证或测试，我们在代码中采用了将数据卸载到 CPU 的策略。这意味着，**如果训练过程中开启了周期性验证（即 `val_interval <= max_epochs`），训练将只能在单张 GPU 上进行**。
+Due to the large size of the full test set, the validation process has high VRAM requirements. To enable validation or testing on devices with limited resources (e.g., 24GB VRAM), we have implemented a strategy to offload data to the CPU. This means that **if periodic validation is enabled during training (i.e., `val_interval <= max_epochs`), the training can only be run on a single GPU**.
 
-若您希望使用多卡进行训练，则必须**关闭周期性验证**。具体操作是，将 `val_interval` 的值设置为大于 `max_epochs`。例如，在 `configs/exp/xvlm_1xb24_hccm_geotext1652.py` 文件中，将 `train_cfg` 修改如下：
+If you wish to use multiple GPUs for training, you **must disable periodic validation**. This can be done by setting the `val_interval` to a value greater than `max_epochs`. For example, modify the `train_cfg` in `configs/exp/xvlm_1xb24_hccm_geotext1652.py` as follows:
 
 ```python
-# 将 val_interval 设置为一个大于 max_epochs 的值，以在多卡训练时禁用验证
+# Set val_interval to a value greater than max_epochs to disable validation during multi-GPU training
 train_cfg = dict(type='EpochBasedTrainLoop', max_epochs=6, val_interval=10)
 ```
 
-多卡训练命令（以 4 卡为例）：
+Multi-GPU training command (e.g., for 4 GPUs):
 
 ```bash
 bash tools/dist_train.sh configs/exp/xvlm_1xb24_hccm_geotext1652.py 4
 ```
 
-## 模型测试
+## Model Testing
 
-您可以从 [**此处**](https://drive.google.com/file/d/1p468glkjTqxuE7YhzdXnC1Kx4xEJQEM3/view?usp=sharing) 下载我们在 GeoText1652 数据集上训练了 6 个 epoch 的 HCCM 模型权重 (`epoch_6.pth`)。
+You can download the HCCM model weights (`epoch_6.pth`), trained for 6 epochs on the GeoText1652 dataset, from [**here**](https://drive.google.com/file/d/1p468glkjTqxuE7YhzdXnC1Kx4xEJQEM3/view?usp=sharing).
 
-### 在 GeoText1652 数据集上测试
+### Testing on GeoText1652 Dataset
 
-为了完成全面的双向检索测试（Image-to-Text 和 Text-to-Image），您需要分别执行以下两步：
+To perform a comprehensive bidirectional retrieval test (Image-to-Text and Text-to-Image), you need to perform the following two steps separately:
 
-1.  **测试 Image-to-Text (I2T) 方向：**
-    *   打开 `configs/exp/xvlm_1xb24_hccm_geotext1652.py` 文件。
-    *   找到 `test_cfg` 参数，并设置 `i2t=True`。
-    *   执行测试命令：
+1.  **Test Image-to-Text (I2T) Direction:**
+    *   Open the `configs/exp/xvlm_1xb24_hccm_geotext1652.py` file.
+    *   Find the `test_cfg` parameter and set `i2t=True`.
+    *   Execute the test command:
     ```bash
     CUDA_VISIBLE_DEVICES=0 python tools/test.py \
     configs/exp/xvlm_1xb24_hccm_geotext1652.py \
     epoch_6.pth 
     ```
 
-2.  **测试 Text-to-Image (T2I) 方向：**
-    *   再次修改 `configs/exp/xvlm_1xb24_hccm_geotext1652.py` 文件。
-    *   将 `test_cfg` 参数中的 `i2t` 设置为 `False`。
-    *   重新执行测试命令：
+2.  **Test Text-to-Image (T2I) Direction:**
+    *   Modify the `configs/exp/xvlm_1xb24_hccm_geotext1652.py` file again.
+    *   Set the `i2t` parameter in `test_cfg` to `False`.
+    *   Re-run the test command:
     ```bash
     CUDA_VISIBLE_DEVICES=0 python tools/test.py \
     configs/exp/xvlm_1xb24_hccm_geotext1652.py \
     epoch_6.pth 
     ```
 
-### 在 ERA 数据集上进行 Zero-Shot 测试
+### Zero-Shot Testing on ERA Dataset
 
-要评估 HCCM 在 ERA 数据集上的零样本泛化能力，请运行以下命令。同样地，您需要通过修改配置文件来分别测试 I2T 和 T2I 两个方向。
+To evaluate the zero-shot generalization capability of HCCM on the ERA dataset, please run the following command. Similarly, you will need to modify the configuration file to test the I2T and T2I directions separately.
 
-*   打开 `configs/exp/xvlm_1xb24_hccm_ERAzeroshot.py` 文件。
-*   根据测试需求，将 `test_cfg` 中的 `i2t` 参数设置为 `True` (I2T) 或 `False` (T2I)。
-*   执行测试命令：
+*   Open the `configs/exp/xvlm_1xb24_hccm_ERAzeroshot.py` file.
+*   Depending on your testing needs, set the `i2t` parameter in `test_cfg` to `True` (for I2T) or `False` (for T2I).
+*   Execute the test command:
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 python tools/test.py \
@@ -227,10 +234,10 @@ configs/exp/xvlm_1xb24_hccm_ERAzeroshot.py \
 epoch_6.pth 
 ```
 
-## 致谢 (Acknowledgements)
+## Acknowledgements
 
-我们的研究工作建立在众多优秀的开源项目之上。在此，我们向以下项目的开发者和贡献者表示最诚挚的感谢：
+Our research is built upon many excellent open-source projects. We would like to express our sincere gratitude to the developers and contributors of the following projects:
 
-- [X-VLM](https://github.com/zengyan-97/X-VLM): 一个强大的多粒度视觉语言对齐预训练模型，为我们的工作提供了坚实的起点。
-- [GeoText-1652](https://github.com/MultimodalGeo/GeoText-1652): 一个专注于无人机导航中空间关系匹配的高质量基准数据集。
-- [OpenMMLab](https://github.com/open-mmlab): 感谢 [MMPretrain](https://github.com/open-mmlab/mmpretrain)、[MMCV](https://github.com/open-mmlab/mmcv) 和 [MMEngine](https://github.com/open-mmlab/mmengine) 提供的高效、可扩展的深度学习框架，极大地简化了我们的研发流程。
+- [X-VLM](https://github.com/zengyan-97/X-VLM): A powerful pre-trained model for multi-granularity vision-language alignment that provided a solid foundation for our work.
+- [GeoText-1652](https://github.com/MultimodalGeo/GeoText-1652): A high-quality benchmark dataset focused on spatial relationship matching for drone navigation.
+- [OpenMMLab](https://github.com/open-mmlab): Thanks to [MMPretrain](https://github.com/open-mmlab/mmpretrain), [MMCV](https://github.com/open-mmlab/mmcv), and [MMEngine](https://github.com/open-mmlab/mmengine) for providing an efficient and scalable deep learning framework that greatly simplified our development process.
