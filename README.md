@@ -2,7 +2,7 @@
 
 [![Paper](https://img.shields.io/badge/arXiv-2508.21539-b31b1b.svg)](https://arxiv.org/pdf/2508.21539)
 [![Pretrained Model](https://img.shields.io/badge/Model-Download-blue.svg)](https://drive.google.com/file/d/1p468glkjTqxuE7YhzdXnC1Kx4xEJQEM3/view?usp=sharing)
-[![License](https://img.shields.io/badge/License-Apache--2.0-green.svg)](LICENSE)
+
 
 **This is the official implementation for our ACM MM 2025 paper, "HCCM".**
 
