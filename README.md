@@ -1,7 +1,3 @@
-Of course, here is the English translation of your `README.md` file. All content and the original structure have been preserved.
-
----
-
 # HCCM: Hierarchical Cross-Granularity Contrastive and Matching Learning for Natural Language-Guided Drones
 
 [![Paper](https://img.shields.io/badge/arXiv-2508.21539-b31b1b.svg)](https://arxiv.org/pdf/2508.21539)
